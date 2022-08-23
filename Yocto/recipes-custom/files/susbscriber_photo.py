@@ -23,4 +23,7 @@ client.on_message = on_message
 client.connect(MQTT_SERVER,1883,60)
 
 
-client.loop_forever()
+client.loop_start()
+time.sleep(15)
+client.disconnect()
+client.loop_stop()
