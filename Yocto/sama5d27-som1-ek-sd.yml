@@ -1,0 +1,97 @@
+header:
+  version: 8
+
+machine: sama5d27-som1-ek-sd
+distro: poky
+target:
+  - core-image-laura
+
+repos:
+  meta-custom:
+    path: meta-custom
+
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    path: layers/poky
+    refspec: dunfell
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+  meta-openembedded:
+    url: http://git.openembedded.org/meta-openembedded
+    path: layers/meta-openembedded
+    refspec: dunfell
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+      meta-perl:
+      meta-webserver:
+      meta-initramfs:
+      meta-multimedia:
+
+  # openembedded-core:
+  #   url: https://git.openembedded.org/openembedded-core
+  #   path: layers/openembedded-core
+  #   refspec: dunfell
+  #   layers:
+  #       meta:
+   
+
+
+  meta-aws:
+    url: https://github.com/aws4embeddedlinux/meta-aws.git
+    path: layers/meta-aws
+    refspec: dunfell
+
+  meta-atmel:
+    url: https://github.com/LauraKouadio/meta-atmel.git
+    path: layers/meta-atmel
+    refspec: dunfell
+    
+
+
+bblayers_conf_header:
+  standard: |
+    POKY_BBLAYERS_CONF_VERSION = "2"
+    BBPATH = "${TOPDIR}"
+    BBFILES ?= ""
+local_conf_header:
+  standard: |
+    CONF_VERSION = "1"
+    PACKAGE_CLASSES ?= "package_ipk"
+    SDKMACHINE = "x86_64"
+    USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+    PATCHRESOLVE = "noop"
+    LICENSE_FLAGS_WHITELIST += "commercial"
+    SYSVINIT_ENABLED_GETTYS = ""
+    ENABLE_BINARY_LOCALE_GENERATION = "1"
+    GLIBC_SPLIT_LC_PACKAGES = "1"
+    GLIBC_GENERATE_LOCALES += "en_GB.UTF-8 en_US.UTF-8 fr_FR.UTF-8 hi_IN.UTF-8 de_DE.UTF-8 zh_CN.UTF-8 es_ES.UTF-8"
+    IMAGE_LINGUAS += "en-gb en-us fr-fr hi-in de-de zh-cn es-es"
+    IMAGE_INSTALL_append = " usbutils ffmpeg v4l-utils python3 python3-modules mqtt-participants"
+    IMAGE_INSTALL_append = " gstreamer1.0"
+    IMAGE_INSTALL_append = " gstreamer1.0-plugins-base"
+    IMAGE_INSTALL_append = " gstreamer1.0-plugins-good"
+#    MACHINE_ESSENTIAL_EXTRA_RDEPENDS_append = " kernel-modules"
+#    KERNEL_MODULE_AUTOLOAD_append = " g_serial"
+    
+  debug-tweaks: |
+    EXTRA_IMAGE_FEATURES = "debug-tweaks"
+  diskmon: |
+    BB_DISKMON_DIRS = "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        ABORT,${TMPDIR},100M,1K \
+        ABORT,${DL_DIR},100M,1K \
+        ABORT,${SSTATE_DIR},100M,1K \
+        ABORT,/tmp,10M,1K"
+  # uboot-version: |
+  #   PREFERRED_VERSION_u-boot-at91 = "v2022.01-at91+gitAUTOINC+7b59654a48"
+  #   PREFERRED_VERSION_dt-overlay-at91 = "1.0+gitAUTOINC+1ebaa59e16"
+  # host-tools: |
+    # TOOLCHAIN_HOST_TASK_append = " nativesdk-openssl"
