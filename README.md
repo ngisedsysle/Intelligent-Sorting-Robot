@@ -16,3 +16,5 @@ then sending that picture to the artificial intelligence located on the PC. In o
 ## Getting Started
 
 ### The artificial intelligence
+
+#### Construction of the dataset
