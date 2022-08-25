@@ -39,21 +39,27 @@ The script Intelligent-Sorting-Robot/IA/Test/detect_composant_nn_test.ipynb can 
 
 Both programms have been created in the Arduino IDE, since it is the card the robotic arm is working with.
 
-Intelligent-Sorting-Robot/Robot Control/serial_trame.ino: Depending on the command received (see the serial trame section), this scripts can turn a led connecting to the robot's card on, move the motor which has 0 for ID or moving around a small paper cube.
+Intelligent-Sorting-Robot/Robot Control/serial_trame.ino: Depending on the command received (see the serial trame section), this scripts can turn a led connecting to the robot's card on, move the motor which has 0 for ID or moving around a small paper cube. This programm must be used with "assemblage.py".
 
 
-Intelligent-Sorting-Robot/Robot Control/serial_trame_2.ino: According to the result of the prediction of the IA, the robot will take the object from a pre-defined postion: 90° degrees from its initial postion if the IA successfully detected the capacitor, 180° from its initial position otherwise.
+Intelligent-Sorting-Robot/Robot Control/serial_trame_2.ino: According to the result of the prediction of the IA, the robot will take the object from a pre-defined postion: 90° degrees from its initial postion if the IA successfully detected the capacitor, 180° from its initial position otherwise. This programm must be used with "assemblage_2.py".
 
 One of these programms has to be flashed on the ArbotiX borad via the Arduio IDE.
 
 
 ### Python Serial link
 
+Intelligent-Sorting-Robot/Serial_link_py/assemblage.py passes a picture located on the PC to the artificial intelligence and makes a prediction. If a capacitor has been detected with a probability equal to 1, the user will be able to choose between 3 commands the robot will execute.  This programm must be used with "serial_trame.ino".
+
+
 Intelligent-Sorting-Robot/Serial_link_py/function_serial_link.py is used in "assemblage.py".
 
-Intelligent-Sorting-Robot/Serial_link_py/assemblage_2.py asks the Atmel board (see the Yocto part) to take a picture with the webcam plugged on the board and to send it back to the PC. The script then passes the picture to the IA, which will make a prediction, allowing the robot to move according to this prediction.
+Intelligent-Sorting-Robot/Serial_link_py/assemblage_2.py asks the Atmel board (see the Yocto part) to take a picture with the webcam plugged on the board and to send it back to the PC. The script then passes the picture to the IA, which will make a prediction, allowing the robot to move according to this prediction. This programm must be used with "serial_trame_2.ino".
+
 
 To launch on of these scripts, use the following command: "python3 ./assemblage.py" or "python3 ./assemblage_2.py". For "assemblage_2.py", the linux distribution presented in the next part has to be set on the Atmel board.
+
+### Yocto and the Atmel board
 
 
 
