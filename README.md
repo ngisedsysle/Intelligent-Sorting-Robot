@@ -35,4 +35,27 @@ CNN_kaggle.ipynb presents the structure of the neural network I created. Running
 The script Intelligent-Sorting-Robot/IA/Test/detect_composant_nn_test.ipynb can be used to test the model previously created on data the algorithm has not seen before. The user has to indicate where are the pictures he wants to use for the test in the third cell.
 
 
+### Robot control
+
+Both programms have been created in the Arduino IDE, since it is the card the robotic arm is working with.
+
+Intelligent-Sorting-Robot/Robot Control/serial_trame.ino: Depending on the command received (see the serial trame section), this scripts can turn a led connecting to the robot's card on, move the motor which has 0 for ID or moving around a small paper cube.
+
+
+Intelligent-Sorting-Robot/Robot Control/serial_trame_2.ino: According to the result of the prediction of the IA, the robot will take the object from a pre-defined postion: 90° degrees from its initial postion if the IA successfully detected the capacitor, 180° from its initial position otherwise.
+
+One of these programms has to be flashed on the ArbotiX borad via the Arduio IDE.
+
+
+### Python Serial link
+
+Intelligent-Sorting-Robot/Serial_link_py/function_serial_link.py is used in "assemblage.py".
+
+Intelligent-Sorting-Robot/Serial_link_py/assemblage_2.py asks the Atmel board (see the Yocto part) to take a picture with the webcam plugged on the board and to send it back to the PC. The script then passes the picture to the IA, which will make a prediction, allowing the robot to move according to this prediction.
+
+To launch on of these scripts, use the following command: "python3 ./assemblage.py" or "python3 ./assemblage_2.py". For "assemblage_2.py", the linux distribution presented in the next part has to be set on the Atmel board.
+
+
+
+
 
