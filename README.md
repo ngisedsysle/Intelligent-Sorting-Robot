@@ -61,6 +61,48 @@ To launch on of these scripts, use the following command: "python3 ./assemblage.
 
 ### Yocto and the Atmel board
 
+The image has been built on a server with Yocto and docker already installed.
+
+Yocto release used: Dunfell
+
+This image contains the following layers: 
+   * meta-atmel
+   * meta-aws
+   * meta-openembedded
+   * meta-poky
+   * meta-custom
+
+The recipes I added are:
+   * recipes-connectivity: Used to configure the mosquitto broker
+   * recipes-core/images/core-image-laura.bb where I manually added some recipes
+   * mqtt-participants_1.1.bb with files to subscribe and publish on topics located on the mosquitto broker
+   * Intelligent-Sorting-Robot/Yocto/recipes-kernel/linux-mchp_%.bbappend which resume the configuration of the kernel
+
+The kernel has to be configurated the board will be able to detect the webcam:
+   * in a terminal on the server: kas-container shell path-to-the-yml/.yml -c "bitbake -c menuconfig virtual/kernel"
+   * In the menuconfig, I activated “USB Video Class” in Device Drivers/Mulimedia Support/Media drivers/Media USB Adaptaters.
+
+To launch a build:
+   * kas-container build path-to-the-yml/.yml
+
+Once the build is done, flash a micro SD card using Balena etcher for example. Put the micro SD card in a SD card adaptater and then on the board. Use the terminal of your choice to access your liux distribution. I used Tera Term.
+
+In /etc/init.d/mosquitto add the following lines under "echo "Starting Mosquitto message broker" "mosquitto"":
+   * mosquitto -d
+   * echo "Mosquitto is running in the background"
+
+To test the installation:
+
+In /usr/bin:
+   * plug a webcam on the board
+   * python3 mqtt_command.py
+   * WAIT until you see About to subscribe to the topic: command/request_image on the terminal
+
+QUICKLY on your PC:
+   * python ./assemblage_2.py 
+
+If you put a capacitor in front of the camera, the robot should take the object placed on its initial postion and put it 90° away from its initial position, 180° otherwise.
+
 
 
 
