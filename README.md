@@ -71,6 +71,7 @@ This image contains the following layers:
    * meta-openembedded
    * meta-poky
    * meta-custom
+In the "meta-atmel" layer, delete the file "u-boot-atmel.inc" and replace it by the file "Intelligent-Sorting-Robot/meta-atmel/u-boot-atmel.inc"
 
 The recipes I added are:
    * recipes-connectivity: Used to configure the mosquitto broker
