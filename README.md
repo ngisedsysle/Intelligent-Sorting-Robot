@@ -73,7 +73,7 @@ This image contains the following layers:
    * meta-custom
 In the "meta-atmel" layer, delete the file "u-boot-atmel.inc" and replace it by the file "Intelligent-Sorting-Robot/meta-atmel/u-boot-atmel.inc"
 
-The recipes I added are:
+The recipes I added in my own layer called "meta-custom" are:
    * recipes-connectivity: Used to configure the mosquitto broker
    * recipes-core/images/core-image-laura.bb where I manually added some recipes
    * mqtt-participants_1.1.bb with files to subscribe and publish on topics located on the mosquitto broker
